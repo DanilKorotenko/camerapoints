@@ -19,9 +19,7 @@
 #ifndef WIDGET_H
 #define WIDGET_H
 
-#include <QtGui/QWidget>
-
-class QLineEdit;
+#include <QtGui>
 
 class Widget : public QWidget
 {
@@ -31,15 +29,19 @@ public:
 	Widget(QWidget *parent = 0);
 	~Widget();
 private:
-	QLineEdit *camera1x;
-	QLineEdit *camera1y;
-	QLineEdit *camera1angle;
-	QLineEdit *camera2x;
-	QLineEdit *camera2y;
-	QLineEdit *camera2angle;
+	QRegExpValidator *latitudeValidator;
+	QRegExpValidator *longitudeValidator;
+	QRegExpValidator *azimuthValidator;
 
-	QLineEdit *pointX;
-	QLineEdit *pointY;
+	QLineEdit *camera1Latitude;
+	QLineEdit *camera1Longitude;
+	QLineEdit *camera1Azimuth;
+	QLineEdit *camera2Latitude;
+	QLineEdit *camera2Longitude;
+	QLineEdit *camera2Azimuth;
+
+	QLineEdit *pointLatitude;
+	QLineEdit *pointLongitude;
 
 private slots:
 	void slotSolve();
