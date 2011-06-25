@@ -9,7 +9,7 @@ QT       += core gui
 TARGET = CameraPoints
 TEMPLATE = app
 
-VERSION = 1.0.1
+VERSION = 1.1.0
 
 INCLUDEPATH = Sources \
 	Sources/UI \
@@ -31,7 +31,7 @@ SOURCES += Sources/main.cpp\
 	alglib/src/ap.cpp \
 	alglib/src/alglibmisc.cpp \
 	alglib/src/alglibinternal.cpp \
-    Sources/DataModel/GeoCoord.cpp
+	Sources/DataModel/GeoCoord.cpp
 
 HEADERS  += Sources/UI/Widget.h \
 	alglib/src/stdafx.h \
@@ -48,4 +48,4 @@ HEADERS  += Sources/UI/Widget.h \
 	alglib/src/ap.h \
 	alglib/src/alglibmisc.h \
 	alglib/src/alglibinternal.h \
-    Sources/DataModel/GeoCoord.h
+	Sources/DataModel/GeoCoord.h
