@@ -58,15 +58,13 @@ void Widget::readSettings()
 		.toString());
 	camera1Longitude->setText(settings.value(kCamera1Longitude, QString())
 		.toString());
-	camera1Azimuth->setText(settings.value(kCamera1Azimuth, QString())
-		.toString());
+	camera1Azimuth->setValue(settings.value(kCamera1Azimuth, 0).toDouble());
 
 	camera2Latitude->setText(settings.value(kCamera2Latitude, QString())
 		.toString());
 	camera2Longitude->setText(settings.value(kCamera2Longitude, QString())
 		.toString());
-	camera2Azimuth->setText(settings.value(kCamera2Azimuth, QString())
-		.toString());
+	camera2Azimuth->setValue(settings.value(kCamera2Azimuth, 0).toDouble());
 }
 
 void Widget::writeSettings()
@@ -75,11 +73,11 @@ void Widget::writeSettings()
 
 	settings.setValue(kCamera1Latitude, camera1Latitude->text());
 	settings.setValue(kCamera1Longitude, camera1Longitude->text());
-	settings.setValue(kCamera1Azimuth, camera1Azimuth->text());
+	settings.setValue(kCamera1Azimuth, camera1Azimuth->value());
 
 	settings.setValue(kCamera2Latitude, camera2Latitude->text());
 	settings.setValue(kCamera2Longitude, camera2Longitude->text());
-	settings.setValue(kCamera2Azimuth, camera2Azimuth->text());
+	settings.setValue(kCamera2Azimuth, camera2Azimuth->value());
 }
 
 void Widget::initUI()
@@ -105,8 +103,10 @@ void Widget::initUI()
 	topLayout->addWidget(new QLabel(tr("Longitude:"),this),1,2,1,1);
 	topLayout->addWidget(camera1Longitude,1,3,1,1);
 
-	camera1Azimuth = new QLineEdit(this);
-	camera1Azimuth->setValidator(azimuthValidator);
+	camera1Azimuth = new QDoubleSpinBox(this);
+	camera1Azimuth->setMinimum(0);
+	camera1Azimuth->setMaximum(360);
+	camera1Azimuth->setSingleStep(0.1);
 	topLayout->addWidget(new QLabel(tr("Azimuth:"),this),1,4,1,1);
 	topLayout->addWidget(camera1Azimuth,1,5,1,1);
 
@@ -122,8 +122,10 @@ void Widget::initUI()
 	topLayout->addWidget(new QLabel(tr("Longitude:"),this),3,2,1,1);
 	topLayout->addWidget(camera2Longitude,3,3,1,1);
 
-	camera2Azimuth = new QLineEdit(this);
-	camera2Azimuth->setValidator(azimuthValidator);
+	camera2Azimuth = new QDoubleSpinBox(this);
+	camera2Azimuth->setMinimum(0);
+	camera2Azimuth->setMaximum(360);
+	camera2Azimuth->setSingleStep(0.1);
 	topLayout->addWidget(new QLabel(tr("Azimuth:"),this),3,4,1,1);
 	topLayout->addWidget(camera2Azimuth,3,5,1,1);
 

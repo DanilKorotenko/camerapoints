@@ -35,10 +35,11 @@ private:
 
 	QLineEdit *camera1Latitude;
 	QLineEdit *camera1Longitude;
-	QLineEdit *camera1Azimuth;
+	QDoubleSpinBox *camera1Azimuth;
+
 	QLineEdit *camera2Latitude;
 	QLineEdit *camera2Longitude;
-	QLineEdit *camera2Azimuth;
+	QDoubleSpinBox *camera2Azimuth;
 
 	QLineEdit *pointLatitude;
 	QLineEdit *pointLongitude;
