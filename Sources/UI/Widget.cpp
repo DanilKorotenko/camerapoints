@@ -21,7 +21,68 @@
 #include <math.h>
 #include "GeoCoord.h"
 
+////////////////////////////////////////////////////////////////////////////////
+// Constants
+// Settings keys
+static QString const kCamera1Latitude = "kCamera1Latitude";
+static QString const kCamera1Longitude = "kCamera1Longitude";
+static QString const kCamera1Azimuth = "kCamera1Azimuth";
+
+static QString const kCamera2Latitude = "kCamera2Latitude";
+static QString const kCamera2Longitude = "kCamera2Longitude";
+static QString const kCamera2Azimuth = "kCamera2Azimuth";
+
+////////////////////////////////////////////////////////////////////////////////
+// Implementation Widget
+
+// Constructors/destructors
 Widget::Widget(QWidget *parent) : QWidget(parent)
+{
+	QApplication::setOrganizationName("CameraSoft");
+	QApplication::setApplicationName("CameraPoints");
+	initUI();
+	readSettings();
+}
+
+Widget::~Widget()
+{
+	writeSettings();
+}
+
+// Other methods
+void Widget::readSettings()
+{
+	QSettings settings;
+
+	camera1Latitude->setText(settings.value(kCamera1Latitude, QString())
+		.toString());
+	camera1Longitude->setText(settings.value(kCamera1Longitude, QString())
+		.toString());
+	camera1Azimuth->setText(settings.value(kCamera1Azimuth, QString())
+		.toString());
+
+	camera2Latitude->setText(settings.value(kCamera2Latitude, QString())
+		.toString());
+	camera2Longitude->setText(settings.value(kCamera2Longitude, QString())
+		.toString());
+	camera2Azimuth->setText(settings.value(kCamera2Azimuth, QString())
+		.toString());
+}
+
+void Widget::writeSettings()
+{
+	QSettings settings;
+
+	settings.setValue(kCamera1Latitude, camera1Latitude->text());
+	settings.setValue(kCamera1Longitude, camera1Longitude->text());
+	settings.setValue(kCamera1Azimuth, camera1Azimuth->text());
+
+	settings.setValue(kCamera2Latitude, camera2Latitude->text());
+	settings.setValue(kCamera2Longitude, camera2Longitude->text());
+	settings.setValue(kCamera2Azimuth, camera2Azimuth->text());
+}
+
+void Widget::initUI()
 {
 	QGridLayout *topLayout = new QGridLayout(this);
 
@@ -35,19 +96,16 @@ Widget::Widget(QWidget *parent) : QWidget(parent)
 	azimuthValidator = new QRegExpValidator(azimuthRegExp, this);
 
 	camera1Latitude = new QLineEdit(this);
-	camera1Latitude->setText("49 02 53.81");
 	camera1Latitude->setValidator(latitudeValidator);
 	topLayout->addWidget(new QLabel(tr("Latitude:"),this),1,0,1,1);
 	topLayout->addWidget(camera1Latitude,1,1,1,1);
 
 	camera1Longitude = new QLineEdit(this);
-	camera1Longitude->setText("38 13 12.75");
 	camera1Longitude->setValidator(longitudeValidator);
 	topLayout->addWidget(new QLabel(tr("Longitude:"),this),1,2,1,1);
 	topLayout->addWidget(camera1Longitude,1,3,1,1);
 
 	camera1Azimuth = new QLineEdit(this);
-	camera1Azimuth->setText("136.7");
 	camera1Azimuth->setValidator(azimuthValidator);
 	topLayout->addWidget(new QLabel(tr("Azimuth:"),this),1,4,1,1);
 	topLayout->addWidget(camera1Azimuth,1,5,1,1);
@@ -55,19 +113,16 @@ Widget::Widget(QWidget *parent) : QWidget(parent)
 	topLayout->addWidget(new QLabel(tr("camera 2"),this),2,0,1,1);
 
 	camera2Latitude = new QLineEdit(this);
-	camera2Latitude->setText("49 02 49.26");
 	camera2Latitude->setValidator(latitudeValidator);
 	topLayout->addWidget(new QLabel(tr("Latitude:"),this),3,0,1,1);
 	topLayout->addWidget(camera2Latitude,3,1,1,1);
 
 	camera2Longitude = new QLineEdit(this);
-	camera2Longitude->setText("38 13 06.37");
 	camera2Longitude->setValidator(longitudeValidator);
 	topLayout->addWidget(new QLabel(tr("Longitude:"),this),3,2,1,1);
 	topLayout->addWidget(camera2Longitude,3,3,1,1);
 
 	camera2Azimuth = new QLineEdit(this);
-	camera2Azimuth->setText("100.9");
 	camera2Azimuth->setValidator(azimuthValidator);
 	topLayout->addWidget(new QLabel(tr("Azimuth:"),this),3,4,1,1);
 	topLayout->addWidget(camera2Azimuth,3,5,1,1);
@@ -94,11 +149,7 @@ Widget::Widget(QWidget *parent) : QWidget(parent)
 	this->setLayout(topLayout);
 }
 
-Widget::~Widget()
-{
-
-}
-
+// Slots
 void Widget::slotSolve()
 {
 	qreal angle1 = camera1Azimuth->text().toFloat();

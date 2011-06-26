@@ -45,6 +45,11 @@ private:
 
 private slots:
 	void slotSolve();
+
+private:
+	void initUI();
+	void readSettings();
+	void writeSettings();
 };
 
 #endif // WIDGET_H
