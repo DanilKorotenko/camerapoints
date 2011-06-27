@@ -32,7 +32,8 @@ SOURCES += Sources/main.cpp\
 	alglib/src/alglibmisc.cpp \
 	alglib/src/alglibinternal.cpp \
 	Sources/DataModel/GeoCoord.cpp \
-    Sources/UI/MainWindow.cpp
+    Sources/UI/MainWindow.cpp \
+    Sources/UI/PointsController.cpp
 
 HEADERS  += Sources/UI/Widget.h \
 	alglib/src/stdafx.h \
@@ -50,4 +51,5 @@ HEADERS  += Sources/UI/Widget.h \
 	alglib/src/alglibmisc.h \
 	alglib/src/alglibinternal.h \
 	Sources/DataModel/GeoCoord.h \
-    Sources/UI/MainWindow.h
+    Sources/UI/MainWindow.h \
+    Sources/UI/PointsController.h

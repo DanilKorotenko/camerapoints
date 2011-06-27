@@ -16,14 +16,9 @@
  Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 ********************************************************************/
 
-#include "MainWindow.h"
 #include "PointsController.h"
 
-MainWindow::MainWindow(QWidget *parent) :
-	QMainWindow(parent)
+PointsController::PointsController(QWidget *parent) :
+    QWidget(parent)
 {
-	PointsController *pointsController = new PointsController(this);
-	this->setCentralWidget(pointsController);
-
-	new QShortcut(Qt::Key_Escape, this, SLOT(close()));
 }
