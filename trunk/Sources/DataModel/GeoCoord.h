@@ -30,7 +30,8 @@ class GeoCoord
 {
 public:
 	GeoCoord();
-	GeoCoord(const qint16 degrees, const quint8 minutes, const quint8 seconds, const quint8 fracSeconds);
+	GeoCoord(const qint16 degrees, const quint8 minutes, const quint8 seconds,
+		const quint8 fracSeconds);
 	GeoCoord(const double degrees);
 
 	qint16 getDegrees() const;
@@ -48,7 +49,8 @@ public:
 
 	qint32 getValue() const;
 	void setValue(const qint32 value);
-	void setValue(const qint16 degrees, const quint8 minutes, const quint8 seconds, const quint8 fracSeconds);
+	void setValue(const qint16 degrees, const quint8 minutes,
+		const quint8 seconds, const quint8 fracSeconds);
 
 	QString getString();
 	void setString(const QString& str);
