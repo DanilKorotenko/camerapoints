@@ -16,14 +16,21 @@
  Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 ********************************************************************/
 
-#include <QtGui/QApplication>
-#include "MainWindow.h"
+#ifndef MAINWINDOW_H
+#define MAINWINDOW_H
 
-int main(int argc, char *argv[])
+#include <QMainWindow>
+
+class MainWindow : public QMainWindow
 {
-	QApplication application(argc, argv);
-	MainWindow mainWindow;
-	mainWindow.show();
+    Q_OBJECT
+public:
+    explicit MainWindow(QWidget *parent = 0);
 
-	return application.exec();
-}
+signals:
+
+public slots:
+
+};
+
+#endif // MAINWINDOW_H

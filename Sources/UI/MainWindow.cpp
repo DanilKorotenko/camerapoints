@@ -16,14 +16,12 @@
  Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 ********************************************************************/
 
-#include <QtGui/QApplication>
 #include "MainWindow.h"
+#include "Widget.h"
 
-int main(int argc, char *argv[])
+MainWindow::MainWindow(QWidget *parent) :
+	QMainWindow(parent)
 {
-	QApplication application(argc, argv);
-	MainWindow mainWindow;
-	mainWindow.show();
-
-	return application.exec();
+	Widget *widget = new Widget(this);
+	this->setCentralWidget(widget);
 }
