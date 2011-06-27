@@ -16,14 +16,21 @@
  Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 ********************************************************************/
 
-#include "MainWindow.h"
-#include "PointsController.h"
+#ifndef POINTSCONTROLLER_H
+#define POINTSCONTROLLER_H
 
-MainWindow::MainWindow(QWidget *parent) :
-	QMainWindow(parent)
+#include <QWidget>
+
+class PointsController : public QWidget
 {
-	PointsController *pointsController = new PointsController(this);
-	this->setCentralWidget(pointsController);
+    Q_OBJECT
+public:
+    explicit PointsController(QWidget *parent = 0);
 
-	new QShortcut(Qt::Key_Escape, this, SLOT(close()));
-}
+signals:
+
+public slots:
+
+};
+
+#endif // POINTSCONTROLLER_H
