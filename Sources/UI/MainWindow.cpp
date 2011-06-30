@@ -19,6 +19,8 @@
 #include "MainWindow.h"
 #include "PointsController.h"
 
+#include <QtGui>
+
 MainWindow::MainWindow(QWidget *parent) :
 	QMainWindow(parent)
 {
