@@ -4,12 +4,12 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT += core gui sql
 
 TARGET = CameraPoints
 TEMPLATE = app
 
-VERSION = 1.1.1
+VERSION = 2.0.0
 
 INCLUDEPATH = Sources \
 	Sources/UI \
@@ -32,8 +32,8 @@ SOURCES += Sources/main.cpp\
 	alglib/src/alglibmisc.cpp \
 	alglib/src/alglibinternal.cpp \
 	Sources/DataModel/GeoCoord.cpp \
-    Sources/UI/MainWindow.cpp \
-    Sources/UI/PointsController.cpp
+	Sources/UI/MainWindow.cpp \
+	Sources/UI/PointsController.cpp
 
 HEADERS  += Sources/UI/Widget.h \
 	alglib/src/stdafx.h \
@@ -51,5 +51,5 @@ HEADERS  += Sources/UI/Widget.h \
 	alglib/src/alglibmisc.h \
 	alglib/src/alglibinternal.h \
 	Sources/DataModel/GeoCoord.h \
-    Sources/UI/MainWindow.h \
-    Sources/UI/PointsController.h
+	Sources/UI/MainWindow.h \
+	Sources/UI/PointsController.h
