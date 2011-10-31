@@ -6,14 +6,16 @@
 
 QT += core gui sql
 
-TARGET = CameraPoints
+TARGET = Biangularity
 TEMPLATE = app
 
-VERSION = 2.0.0
+VERSION = 1.0.0.2
 
 INCLUDEPATH = Sources \
 	Sources/UI \
+	Sources/UI/Dialogs \
 	Sources/DataModel \
+	Sources/Controllers \
 	alglib/src
 
 SOURCES += Sources/main.cpp\
@@ -33,7 +35,9 @@ SOURCES += Sources/main.cpp\
 	alglib/src/alglibinternal.cpp \
 	Sources/DataModel/GeoCoord.cpp \
 	Sources/UI/MainWindow.cpp \
-	Sources/UI/PointsController.cpp
+	Sources/UI/PointsWidget.cpp \
+	Sources/DataModel/GeoPoint.cpp \
+	Sources/Controllers/Application.cpp
 
 HEADERS  += Sources/UI/Widget.h \
 	alglib/src/stdafx.h \
@@ -52,4 +56,13 @@ HEADERS  += Sources/UI/Widget.h \
 	alglib/src/alglibinternal.h \
 	Sources/DataModel/GeoCoord.h \
 	Sources/UI/MainWindow.h \
-	Sources/UI/PointsController.h
+	Sources/UI/PointsWidget.h \
+	Sources/DataModel/GeoPoint.h \
+	Sources/Controllers/Application.h
+
+TRANSLATIONS += Resources/translations/ru.ts
+
+RESOURCES += \
+	Resources/resources.qrc
+
+

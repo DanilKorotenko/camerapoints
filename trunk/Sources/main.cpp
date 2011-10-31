@@ -17,11 +17,19 @@
 ********************************************************************/
 
 #include <QtGui/QApplication>
+#include <QtCore/QTranslator>
+
 #include "MainWindow.h"
+#include "Application.h"
 
 int main(int argc, char *argv[])
 {
-	QApplication application(argc, argv);
+	Application application(argc, argv);
+
+//	QTranslator translator;
+//	translator.load(":/translations/ru.qm");
+//	application.installTranslator(&translator);
+
 	MainWindow mainWindow;
 	mainWindow.show();
 

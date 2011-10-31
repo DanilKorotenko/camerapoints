@@ -38,8 +38,6 @@ static QString const kCamera2Azimuth = "kCamera2Azimuth";
 // Constructors/destructors
 Widget::Widget(QWidget *parent) : QWidget(parent)
 {
-	QApplication::setOrganizationName("CameraSoft");
-	QApplication::setApplicationName("CameraPoints");
 	initUI();
 	readSettings();
 }
@@ -84,22 +82,27 @@ void Widget::initUI()
 {
 	QGridLayout *topLayout = new QGridLayout(this);
 
-	topLayout->addWidget(new QLabel(tr("camera 1"),this),0,0,1,1);
+//	QRegExp latitudeRegExp("(-?(?:[0-9]{1,2})) ([0-5]?[0-9]) ([0-5]?[0-9]\\.[0-9]{1,2})");
+//	QRegExp longitudeRegExp("(-?(?:(?:1[0-7][0-9])|(?:[0-9]{1,2}))) ([0-5]?[0-9]) ([0-5]?[0-9]\\.[0-9]{1,2})");
+//	QRegExp azimuthRegExp("^((\\d|[1-9]\\d|[12]\\d\\d|3[0-5]\\d)(\\.\\d)?|360(\\.0)?)$");
+//	latitudeValidator = new QRegExpValidator(latitudeRegExp, this);
+//	longitudeValidator = new QRegExpValidator(longitudeRegExp, this);
+//	azimuthValidator = new QRegExpValidator(azimuthRegExp, this);
 
-	QRegExp latitudeRegExp("(-?(?:[0-9]{1,2})) ([0-5]?[0-9]) ([0-5]?[0-9]\\.[0-9]{1,2})");
-	QRegExp longitudeRegExp("(-?(?:(?:1[0-7][0-9])|(?:[0-9]{1,2}))) ([0-5]?[0-9]) ([0-5]?[0-9]\\.[0-9]{1,2})");
-	QRegExp azimuthRegExp("^((\\d|[1-9]\\d|[12]\\d\\d|3[0-5]\\d)(\\.\\d)?|360(\\.0)?)$");
-	latitudeValidator = new QRegExpValidator(latitudeRegExp, this);
-	longitudeValidator = new QRegExpValidator(longitudeRegExp, this);
-	azimuthValidator = new QRegExpValidator(azimuthRegExp, this);
+	QDoubleValidator *doubleValidator = new QDoubleValidator(this);
+
+	point1Name = new QLabel(tr("camera 1"), this);
+	topLayout->addWidget(point1Name,0,0,1,1);
 
 	camera1Latitude = new QLineEdit(this);
-	camera1Latitude->setValidator(latitudeValidator);
+//	camera1Latitude->setValidator(latitudeValidator);
+	camera1Latitude->setValidator(doubleValidator);
 	topLayout->addWidget(new QLabel(tr("Latitude:"),this),1,0,1,1);
 	topLayout->addWidget(camera1Latitude,1,1,1,1);
 
 	camera1Longitude = new QLineEdit(this);
-	camera1Longitude->setValidator(longitudeValidator);
+//	camera1Longitude->setValidator(longitudeValidator);
+	camera1Longitude->setValidator(doubleValidator);
 	topLayout->addWidget(new QLabel(tr("Longitude:"),this),1,2,1,1);
 	topLayout->addWidget(camera1Longitude,1,3,1,1);
 
@@ -110,15 +113,18 @@ void Widget::initUI()
 	topLayout->addWidget(new QLabel(tr("Azimuth:"),this),1,4,1,1);
 	topLayout->addWidget(camera1Azimuth,1,5,1,1);
 
-	topLayout->addWidget(new QLabel(tr("camera 2"),this),2,0,1,1);
+	point2Name = new QLabel(tr("camera 2"), this);
+	topLayout->addWidget(point2Name,2,0,1,1);
 
 	camera2Latitude = new QLineEdit(this);
-	camera2Latitude->setValidator(latitudeValidator);
+//	camera2Latitude->setValidator(latitudeValidator);
+	camera2Latitude->setValidator(doubleValidator);
 	topLayout->addWidget(new QLabel(tr("Latitude:"),this),3,0,1,1);
 	topLayout->addWidget(camera2Latitude,3,1,1,1);
 
 	camera2Longitude = new QLineEdit(this);
-	camera2Longitude->setValidator(longitudeValidator);
+//	camera2Longitude->setValidator(longitudeValidator);
+	camera2Longitude->setValidator(doubleValidator);
 	topLayout->addWidget(new QLabel(tr("Longitude:"),this),3,2,1,1);
 	topLayout->addWidget(camera2Longitude,3,3,1,1);
 
@@ -143,15 +149,32 @@ void Widget::initUI()
 
 	QPushButton *solveButton = new QPushButton(tr("Solve"),this);
 	connect(solveButton,SIGNAL(clicked()),SLOT(slotSolve()));
-	topLayout->addWidget(solveButton,5,5,1,1);
-
-	new QShortcut(Qt::Key_Return, this, SLOT(slotSolve()));
-	new QShortcut(Qt::Key_Escape, this, SLOT(close()));
+	topLayout->addWidget(solveButton,5,4,1,2);
 
 	this->setLayout(topLayout);
 }
 
-// Slots
+// public slots
+void Widget::slotPointsDidChange(QList<GeoPoint> points)
+{
+	if (points.count() < 2)
+	{
+		return;
+	}
+
+	GeoPoint camera1 = points.at(0);
+	GeoPoint camera2 = points.at(1);
+
+	point1Name->setText(camera1.name());
+	camera1Latitude->setText(QString("%1").arg(camera1.latitude().getDouble()));
+	camera1Longitude->setText(QString("%1").arg(camera1.longitude().getDouble()));
+
+	point2Name->setText(camera2.name());
+	camera2Latitude->setText(QString("%1").arg(camera2.latitude().getDouble()));
+	camera2Longitude->setText(QString("%1").arg(camera2.longitude().getDouble()));
+}
+
+// private slots
 void Widget::slotSolve()
 {
 	qreal angle1 = camera1Azimuth->text().toFloat();
@@ -163,21 +186,25 @@ void Widget::slotSolve()
 	qreal cosAngle2 = qCos(angle2);
 	qreal sinAngle2 = qSin(angle2);
 
-	GeoCoord lat1;
-	lat1.setString(camera1Latitude->text());
-	GeoCoord lat2;
-	lat2.setString(camera2Latitude->text());
+//	GeoCoord lat1;
+//	lat1.setString(camera1Latitude->text());
+//	GeoCoord lat2;
+//	lat2.setString(camera2Latitude->text());
 
-	qreal x1 = lat1.getDouble();
-	qreal x2 = lat2.getDouble();
+//	qreal x1 = lat1.getDouble();
+//	qreal x2 = lat2.getDouble();
+	qreal x1 = camera1Latitude->text().toFloat();
+	qreal x2 = camera2Latitude->text().toFloat();
 
-	GeoCoord longitude1;
-	longitude1.setString(camera1Longitude->text());
-	GeoCoord longitude2;
-	longitude2.setString(camera2Longitude->text());
+//	GeoCoord longitude1;
+//	longitude1.setString(camera1Longitude->text());
+//	GeoCoord longitude2;
+//	longitude2.setString(camera2Longitude->text());
 
-	qreal y1 = longitude1.getDouble();
-	qreal y2 = longitude2.getDouble();
+//	qreal y1 = longitude1.getDouble();
+//	qreal y2 = longitude2.getDouble();
+	qreal y1 = camera1Longitude->text().toFloat();
+	qreal y2 = camera2Longitude->text().toFloat();
 
 	QString matrix = QString("[[%1,%2],[%3,%4]]")
 		.arg(cosAngle1).arg(-cosAngle2).arg(sinAngle1).arg(-sinAngle2);
@@ -192,20 +219,21 @@ void Widget::slotSolve()
 	alglib::densesolverreport rep;
 	alglib::rmatrixsolve(matr,2,vec,info,rep,res);
 
-	std::string resStr = res.tostring(1);
+//	std::string resStr = res.tostring(1);
 
 	qreal r1 = res[0];
 
 	qreal px = r1 * qCos(angle1) + x1;
 	qreal py = r1 * qSin(angle1) + y1;
 
-	GeoCoord plat;
-	plat.setDouble(px);
+//	GeoCoord plat;
+//	plat.setDouble(px);
 
-	GeoCoord plongi;
-	plongi.setDouble(py);
+//	GeoCoord plongi;
+//	plongi.setDouble(py);
 
-	pointLatitude->setText(plat.getString());
-	pointLongitude->setText(plongi.getString());
-
+//	pointLatitude->setText(plat.getString());
+//	pointLongitude->setText(plongi.getString());
+	pointLatitude->setText(QString("%1").arg(px));
+	pointLongitude->setText(QString("%1").arg(py));
 }
