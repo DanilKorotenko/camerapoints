@@ -21,6 +21,8 @@
 
 #include <QtGui>
 
+#include "GeoPoint.h"
+
 class Widget : public QWidget
 {
 	Q_OBJECT
@@ -28,15 +30,21 @@ class Widget : public QWidget
 public:
 	Widget(QWidget *parent = 0);
 	~Widget();
+
+public slots:
+	void slotPointsDidChange(QList<GeoPoint> points);
+
 private:
 	QRegExpValidator *latitudeValidator;
 	QRegExpValidator *longitudeValidator;
 	QRegExpValidator *azimuthValidator;
 
+	QLabel *point1Name;
 	QLineEdit *camera1Latitude;
 	QLineEdit *camera1Longitude;
 	QDoubleSpinBox *camera1Azimuth;
 
+	QLabel *point2Name;
 	QLineEdit *camera2Latitude;
 	QLineEdit *camera2Longitude;
 	QDoubleSpinBox *camera2Azimuth;

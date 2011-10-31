@@ -29,17 +29,25 @@ ErV2005@rambler.ru
 // Implementation GeoCoord
 
 // Constructors
-GeoCoord::GeoCoord() : data(0)
+GeoCoord::GeoCoord(const GeoCoord &value)
 {
+	this->setValue(value.getValue());
+	this->setParent(value.parent());
+}
+
+GeoCoord::GeoCoord(QObject *parent) : QObject(parent)
+{
+	_data = 0;
 }
 
 GeoCoord::GeoCoord(const qint16 degrees, const quint8 minutes,
-	const quint8 seconds, const quint8 fracSeconds)
+	const quint8 seconds, const quint8 fracSeconds, QObject *parent) :
+	QObject(parent)
 {
 	setValue(degrees, minutes, seconds, fracSeconds);
 }
 
-GeoCoord::GeoCoord(const double degrees)
+GeoCoord::GeoCoord(const double degrees, QObject *parent) : QObject(parent)
 {
 	setDouble(degrees);
 }
@@ -47,22 +55,22 @@ GeoCoord::GeoCoord(const double degrees)
 // Data getters/setters
 qint16 GeoCoord::getDegrees() const
 {
-	return data / degreesMultiplier;
+	return _data / degreesMultiplier;
 }
 
 quint8 GeoCoord::getMinutes() const
 {
-	return (qAbs(data) % degreesMultiplier)/minutesMultiplier;
+	return (qAbs(_data) % degreesMultiplier)/minutesMultiplier;
 }
 
 quint8 GeoCoord::getSeconds() const
 {
-	return (qAbs(data) % minutesMultiplier)/secondsMultiplier;
+	return (qAbs(_data) % minutesMultiplier)/secondsMultiplier;
 }
 
 quint8 GeoCoord::getFracSeconds() const
 {
-	return qAbs(data) % secondsMultiplier;
+	return qAbs(_data) % secondsMultiplier;
 }
 
 void GeoCoord::setDegrees(const qint16 degrees)
@@ -88,22 +96,22 @@ void GeoCoord::setFracSeconds(const quint8 fracSeconds)
 void GeoCoord::setValue(const qint16 degrees, const quint8 minutes,
 	const quint8 seconds, const quint8 fracSeconds)
 {
-	data = qAbs(degrees) * degreesMultiplier + minutes * minutesMultiplier +
+	_data = qAbs(degrees) * degreesMultiplier + minutes * minutesMultiplier +
 		seconds * secondsMultiplier + fracSeconds;
 	if (degrees < 0)
 	{
-		data = - data;
+		_data = - _data;
 	}
 }
 
 qint32 GeoCoord::getValue() const
 {
-	return data;
+	return _data;
 }
 
 void GeoCoord::setValue(const qint32 value)
 {
-	data = value;
+	_data = value;
 }
 
 QString GeoCoord::getString()
@@ -127,10 +135,17 @@ void GeoCoord::setString(const QString& str)
 
 double GeoCoord::getDouble() const
 {
-	return (double)data * (double)maxDegrees / (double)maxValue;
+	return (double)_data * (double)maxDegrees / (double)maxValue;
 }
 
 void GeoCoord::setDouble(const double value)
 {
-	data = (quint32)(value * (double)maxValue / (double)maxDegrees);
+	_data = (quint32)(value * (double)maxValue / (double)maxDegrees);
+}
+
+GeoCoord & GeoCoord::operator=(const GeoCoord &value)
+{
+	this->setValue(value.getValue());
+	this->setParent(value.parent());
+	return *this;
 }

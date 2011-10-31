@@ -24,15 +24,18 @@ ErV2005@rambler.ru
 #ifndef GEO_COORD_H
 #define GEO_COORD_H
 
+#include <QObject>
 #include <QString>
 
-class GeoCoord
+class GeoCoord : public QObject
 {
+Q_OBJECT
 public:
-	GeoCoord();
+	GeoCoord(const GeoCoord &value);
+	GeoCoord(QObject *parent = 0);
 	GeoCoord(const qint16 degrees, const quint8 minutes, const quint8 seconds,
-		const quint8 fracSeconds);
-	GeoCoord(const double degrees);
+		const quint8 fracSeconds, QObject *parent = 0);
+	GeoCoord(const double degrees, QObject *parent = 0);
 
 	qint16 getDegrees() const;
 	quint8 getMinutes() const;
@@ -55,6 +58,8 @@ public:
 	QString getString();
 	void setString(const QString& str);
 
+	GeoCoord & operator=(const GeoCoord &value);
+
 protected:
 	enum
 	{
@@ -65,7 +70,7 @@ protected:
 		maxValue = degreesMultiplier * maxDegrees
 	};
 
-	qint32 data;
+	qint32 _data;
 };
 
 #endif

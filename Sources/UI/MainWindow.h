@@ -27,10 +27,15 @@ class MainWindow : public QMainWindow
 public:
 	explicit MainWindow(QWidget *parent = 0);
 
-signals:
+private:
+	void initializeMenu();
+	void initializeWidgets();
 
-public slots:
+private slots:
 
+// Help menu actions slots
+	void slotGoToWebSite();
+	void slotShowAboutBox();
 };
 
 #endif // MAINWINDOW_H
