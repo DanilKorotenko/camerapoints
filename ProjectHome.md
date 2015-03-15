@@ -1,0 +1,1 @@
+The application can calculate the intercept of cameras view lines.
